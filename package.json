@@ -1,0 +1,49 @@
+{
+	"name": "vite-plugin-css-literals-lightningcss",
+	"version": "0.0.1",
+	"description": "Vite plugin for transforming CSS literals using Lightning CSS",
+	"type": "module",
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "tsc",
+		"prepublishOnly": "npm run build",
+		"test": "vitest",
+		"test:coverage": "vitest run --coverage",
+		"test:ui": "vitest --ui"
+	},
+	"keywords": [
+		"vite-plugin",
+		"css",
+		"lightningcss",
+		"template-literals"
+	],
+	"author": "Eigil Nikolajsen",
+	"license": "MIT",
+	"dependencies": {
+		"@rollup/pluginutils": "^5.1.2",
+		"lightningcss": "^1.27.0",
+		"magic-string": "^0.30.12"
+	},
+	"peerDependencies": {
+		"vite": "^5.0.0"
+	},
+	"devDependencies": {
+		"typescript": "^5.6.3",
+		"@types/node": "^22.7.9",
+		"vitest": "^2.1.3",
+		"@vitest/coverage-v8": "^2.1.3",
+		"@vitest/ui": "^2.1.3",
+		"vite": "^5.4.10"
+	}
+}

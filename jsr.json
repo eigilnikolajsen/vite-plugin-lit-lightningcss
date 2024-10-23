@@ -1,0 +1,7 @@
+{
+	"name": "@username/vite-plugin-css-literals-lightningcss",
+	"version": "0.0.1",
+	"exports": {
+		".": "./src/index.ts"
+	}
+}
