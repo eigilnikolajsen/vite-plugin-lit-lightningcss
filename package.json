@@ -37,9 +37,6 @@
 	"main": "./dist/index.js",
 	"module": "./dist/index.js",
 	"name": "vite-plugin-lit-lightningcss",
-	"peerDependencies": {
-		"vite": "^5.0.0"
-	},
 	"scripts": {
 		"build": "tsc",
 		"prepublishOnly": "npm run build",
@@ -49,5 +46,5 @@
 	},
 	"type": "module",
 	"types": "./dist/index.d.ts",
-	"version": "0.0.1"
+	"version": "0.0.2"
 }
