@@ -22,7 +22,6 @@ interface LitCSSPluginOptions {
 }
 
 const defaultOptions: LitCSSPluginOptions = {
-	include: /src\/components\/.*\.(js|ts)$/,
 	lightningcss: {
 		minify: true,
 	},
@@ -67,15 +66,15 @@ function processCSSLiteral(
 	let match: RegExpExecArray | null = null;
 
 	// Find where the actual css` part starts within the full match
-	const cssStart = literal.indexOf("css`");
+	const cssStart = fullMatch.indexOf("css`");
 	// Remove the css` prefix and trailing `
-	const content = literal.slice(cssStart + 4, -1);
+	const content = fullMatch.slice(cssStart + 4, -1);
 	// Adjust offset to account for the actual start of the css` part
 	const offset = matchIndex + cssStart + 4;
 
 	while (true) {
 		match = INTERPOLATION_REGEX.exec(content);
-		if (match === null) break;
+		if (!match) break;
 
 		if (match.index > lastIndex) {
 			// Add static content before interpolation
@@ -136,8 +135,8 @@ export function isValidCSS(css: string): boolean {
  * @param {LitCSSPluginOptions} [options=defaultOptions] - Plugin options.
  * @returns {Plugin} A Vite plugin object.
  */
-export default function cssLiteralsLightningcssPlugin(
-	options = defaultOptions
+export default function litLightningcss(
+	options: LitCSSPluginOptions = defaultOptions
 ): Plugin {
 	const filter = createFilter(options.include, options.exclude);
 
@@ -155,16 +154,16 @@ export default function cssLiteralsLightningcssPlugin(
 
 			while (true) {
 				match = CSS_LITERAL_REGEX.exec(input);
-				if (match === null) break;
+				if (!match) break;
 
-				const [fullMatch, content] = match;
+				const [fullMatch] = match;
 				const parts = processCSSLiteral(fullMatch, fullMatch, match.index);
 
-				// Transform static parts with Lightning CSS
+				let processedCSS = "css`";
 				for (const part of parts) {
 					if (part.type === "static" && part.content.trim()) {
-						// Only process content that looks like valid CSS
 						if (!isValidCSS(part.content)) {
+							processedCSS += part.content;
 							continue;
 						}
 
@@ -177,11 +176,9 @@ export default function cssLiteralsLightningcssPlugin(
 
 						try {
 							const result = transform(lightningcssOptions);
-
-							ms.overwrite(part.start, part.end, result.code.toString());
+							processedCSS += result.code.toString();
 							hasChanges = true;
 						} catch (error) {
-							// More graceful error handling - log but don't throw
 							console.warn(
 								`Warning: Failed to transform CSS at ${filename}:${part.start}-${part.end}`,
 								`Content: "${part.content.slice(0, 50)}${
@@ -189,9 +186,15 @@ export default function cssLiteralsLightningcssPlugin(
 								}"`,
 								error
 							);
+							return null;
 						}
+					} else {
+						processedCSS += part.content;
 					}
 				}
+				processedCSS += "`";
+
+				ms.overwrite(match.index, match.index + fullMatch.length, processedCSS);
 			}
 
 			if (!hasChanges) return null;

@@ -3,7 +3,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createServer } from "vite";
 import { describe, expect, it } from "vitest";
-import cssLiteralsLightningcssPlugin from "../src";
+import litLightningcssPlugin from "../src";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -16,22 +16,20 @@ describe("Vite Integration", () => {
 		await fs.mkdir(testDir, { recursive: true });
 		await fs.writeFile(
 			testFile,
-			`
-				const styles = css\`
-					.test {
-						display: flex;
-						padding: 1rem;
-						background-color: #ffffff;
-					}
-				\`
-			`,
+			`const styles = css\`
+				.test {
+					display: flex;
+					padding: 1rem;
+					background-color: #ffffff;
+				}
+			\``
 		);
 
 		// Create Vite server
 		const server = await createServer({
 			configFile: false,
 			root: testDir,
-			plugins: [cssLiteralsLightningcssPlugin()],
+			plugins: [litLightningcssPlugin()],
 		});
 
 		try {
@@ -56,19 +54,17 @@ describe("Vite Integration", () => {
 		await fs.mkdir(testDir, { recursive: true });
 		await fs.writeFile(
 			testFile,
-			`
-      const styles = css\`
-        .test {
-          display: invalid-value;
-        }
-      \`
-    `,
+			`const styles = css\`
+				.test {
+					display: invalid-value;
+				}
+			\``
 		);
 
 		const server = await createServer({
 			configFile: false,
 			root: testDir,
-			plugins: [cssLiteralsLightningcssPlugin()],
+			plugins: [litLightningcssPlugin()],
 		});
 
 		try {

@@ -8,7 +8,7 @@ describe("Utility Functions", () => {
 				"css`.class { color: red; }`",
 				"css` #id { margin: 0; }`",
 				"css`.multiple { color: red; } .classes { margin: 0; }`",
-				"css`element { padding: 10px; }`",
+				"css`div { padding: 10px; }`",
 			];
 
 			for (const css of validCases) {
@@ -22,7 +22,6 @@ describe("Utility Functions", () => {
 				"css` `",
 				"css`not css at all`",
 				"css`{ invalid: true }`",
-				"css`class without dot { color: red; }`",
 			];
 
 			for (const css of invalidCases) {

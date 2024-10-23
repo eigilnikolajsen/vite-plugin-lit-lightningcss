@@ -14,10 +14,10 @@ In your vite.config.ts:
 
 ```typescript
 import { defineConfig } from "vite";
-import cssLiteralsLightningcss from "vite-plugin-lit-lightningcss";
+import litLightningcss from "vite-plugin-lit-lightningcss";
 
 export default defineConfig({
-	plugins: [cssLiteralsLightningcss()],
+	plugins: [litLightningcss()],
 });
 ```
 
@@ -35,7 +35,7 @@ const styles = css`
 ## Configuration
 
 ```typescript
-cssLiteralsLightningcss({
+litLightningcss({
 	// Files to process (default: /src\/components\/.*\.(js|ts)$/)
 	include: /src\/.*\.ts$/,
 
