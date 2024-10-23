@@ -109,7 +109,7 @@ export default function cssLiteralsLightningcssPlugin(
 	const filter = createFilter(options.include, options.exclude);
 
 	return {
-		name: "vite-plugin-css-literals-lightningcss",
+		name: "vite-plugin-lit-lightningcss",
 		transform(input: string, filename: string): TransformResult | null {
 			if (!filter(filename)) return null;
 

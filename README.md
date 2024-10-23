@@ -1,11 +1,11 @@
-# vite-plugin-css-literals-lightningcss
+# vite-plugin-lit-lightningcss
 
-Vite plugin that transforms CSS template literals using Lightning CSS.
+Vite plugin that transforms Lit CSS template literals using Lightning CSS.
 
 ## Install
 
 ```bash
-npm install --save-dev vite-plugin-css-literals-lightningcss
+npm install --save-dev vite-plugin-lit-lightningcss
 ```
 
 ## Usage
@@ -14,7 +14,7 @@ In your vite.config.ts:
 
 ```typescript
 import { defineConfig } from "vite";
-import cssLiteralsLightningcss from "vite-plugin-css-literals-lightningcss";
+import cssLiteralsLightningcss from "vite-plugin-lit-lightningcss";
 
 export default defineConfig({
 	plugins: [cssLiteralsLightningcss()],
