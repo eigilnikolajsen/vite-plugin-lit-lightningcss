@@ -6,6 +6,7 @@ import {
 } from "lightningcss";
 import MagicString from "magic-string";
 import type { Plugin, TransformResult } from "vite";
+import Buffer from "node:buffer";
 
 interface LitCSSPluginOptions {
 	include?: FilterPattern;
@@ -37,7 +38,7 @@ interface ProcessedPart {
 function processCSSLiteral(
 	literal: string,
 	fullMatch: string,
-	matchIndex: number,
+	matchIndex: number
 ): ProcessedPart[] {
 	const parts: ProcessedPart[] = [];
 	let lastIndex = 0;
@@ -104,7 +105,7 @@ export function isValidCSS(css: string): boolean {
 }
 
 export default function cssLiteralsLightningcssPlugin(
-	options = defaultOptions,
+	options = defaultOptions
 ) {
 	const filter = createFilter(options.include, options.exclude);
 
@@ -154,7 +155,7 @@ export default function cssLiteralsLightningcssPlugin(
 								`Content: "${part.content.slice(0, 50)}${
 									part.content.length > 50 ? "..." : ""
 								}"`,
-								error,
+								error
 							);
 						}
 					}
