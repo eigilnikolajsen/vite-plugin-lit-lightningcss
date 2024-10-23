@@ -8,6 +8,13 @@ import MagicString from "magic-string";
 import type { Plugin, TransformResult } from "vite";
 import { Buffer } from "node:buffer";
 
+/**
+ * Options for the LitCSS Plugin.
+ * @interface LitCSSPluginOptions
+ * @property {FilterPattern} [include] - Glob pattern(s) to include files for processing.
+ * @property {FilterPattern} [exclude] - Glob pattern(s) to exclude files from processing.
+ * @property {Partial<TransformOptions<CustomAtRules>>} [lightningcss] - Options for Lightning CSS transformation.
+ */
 interface LitCSSPluginOptions {
 	include?: FilterPattern;
 	exclude?: FilterPattern;
@@ -28,6 +35,14 @@ const CSS_LITERAL_REGEX = /(?:^|[(\s=:,])css`([^`]*(?:\${[^}]*}[^`]*)*)`/g;
 // Regex to split CSS content into static and dynamic parts
 const INTERPOLATION_REGEX = /(\${[^}]*})/g;
 
+/**
+ * Represents a processed part of a CSS literal.
+ * @interface ProcessedPart
+ * @property {'static' | 'dynamic'} type - The type of the processed part.
+ * @property {string} content - The content of the processed part.
+ * @property {number} start - The starting index of the part in the original string.
+ * @property {number} end - The ending index of the part in the original string.
+ */
 interface ProcessedPart {
 	type: "static" | "dynamic";
 	content: string;
@@ -35,6 +50,13 @@ interface ProcessedPart {
 	end: number;
 }
 
+/**
+ * Processes a CSS literal string and splits it into static and dynamic parts.
+ * @param {string} literal - The full CSS literal match.
+ * @param {string} fullMatch - The full match including any preceding characters.
+ * @param {number} matchIndex - The index where the full match starts in the original input.
+ * @returns {ProcessedPart[]} An array of processed parts.
+ */
 function processCSSLiteral(
 	literal: string,
 	fullMatch: string,
@@ -89,6 +111,11 @@ function processCSSLiteral(
 	return parts;
 }
 
+/**
+ * Checks if a given string is likely to be valid CSS.
+ * @param {string} css - The CSS string to validate.
+ * @returns {boolean} True if the string appears to be valid CSS, false otherwise.
+ */
 export function isValidCSS(css: string): boolean {
 	// Simple validation to check if the content looks like CSS
 	// This helps prevent processing of non-CSS template literals
@@ -104,6 +131,11 @@ export function isValidCSS(css: string): boolean {
 	);
 }
 
+/**
+ * Creates a Vite plugin that transforms CSS literals using Lightning CSS.
+ * @param {LitCSSPluginOptions} [options=defaultOptions] - Plugin options.
+ * @returns {Plugin} A Vite plugin object.
+ */
 export default function cssLiteralsLightningcssPlugin(
 	options = defaultOptions
 ): Plugin {

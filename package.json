@@ -5,7 +5,7 @@
 		"lightningcss": "^1.27.0",
 		"magic-string": "^0.30.12"
 	},
-	"description": "Vite plugin for transforming CSS literals using Lightning CSS",
+	"description": "Vite plugin that transforms Lit CSS template literals using Lightning CSS.",
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
 		"@types/node": "^22.7.9",
