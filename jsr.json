@@ -1,7 +1,5 @@
 {
 	"name": "@eigilnikolajsen/vite-plugin-lit-lightningcss",
 	"version": "0.0.1",
-	"exports": {
-		".": "./src/index.ts"
-	}
+	"exports": "./src/index.ts"
 }
