@@ -6,7 +6,7 @@ import {
 } from "lightningcss";
 import MagicString from "magic-string";
 import type { Plugin, TransformResult } from "vite";
-import Buffer from "node:buffer";
+import { Buffer } from "node:buffer";
 
 interface LitCSSPluginOptions {
 	include?: FilterPattern;
