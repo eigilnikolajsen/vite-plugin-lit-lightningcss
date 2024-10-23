@@ -106,7 +106,7 @@ export function isValidCSS(css: string): boolean {
 
 export default function cssLiteralsLightningcssPlugin(
 	options = defaultOptions
-) {
+): Plugin {
 	const filter = createFilter(options.include, options.exclude);
 
 	return {
@@ -169,5 +169,5 @@ export default function cssLiteralsLightningcssPlugin(
 				map: ms.generateMap({ hires: true }),
 			};
 		},
-	} satisfies Plugin;
+	};
 }
