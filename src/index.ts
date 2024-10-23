@@ -138,7 +138,7 @@ export default function cssLiteralsLightningcssPlugin(
 
 						const lightningcssOptions = {
 							filename,
-							code: new Uint8Array(Buffer.from(part.content)),
+							code: Buffer.from(part.content) as unknown as Uint8Array,
 							sourceMap: false,
 							...options.lightningcss,
 						} satisfies TransformOptions<CustomAtRules>;
